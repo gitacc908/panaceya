@@ -1,0 +1,23 @@
+{% extends 'marketing/base.html' %}
+
+{% block title %}FAQ — Панацея{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container narrow">
+        <h1>{{ faq_page.title }}</h1>
+        <p>{{ faq_page.intro_text }}</p>
+
+        <div class="faq-list">
+            {% for item in items %}
+                <article class="card">
+                    <h3>{{ item.question }}</h3>
+                    <p>{{ item.answer }}</p>
+                </article>
+            {% empty %}
+                <p>FAQ пока не заполнен.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

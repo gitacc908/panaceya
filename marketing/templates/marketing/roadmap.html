@@ -1,0 +1,29 @@
+{% extends 'marketing/base.html' %}
+
+{% block title %}Roadmap — Панацея{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container narrow">
+        <h1>{{ roadmap_page.title }}</h1>
+        <p>{{ roadmap_page.intro_text }}</p>
+
+        <div class="timeline">
+            {% for item in items %}
+                <article class="card timeline-item">
+                    {% if item.status_label %}
+                        <span class="badge">{{ item.status_label }}</span>
+                    {% endif %}
+                    <h3>{{ item.title }}</h3>
+                    {% if item.planned_date %}
+                        <p><strong>{{ item.planned_date }}</strong></p>
+                    {% endif %}
+                    <p>{{ item.description }}</p>
+                </article>
+            {% empty %}
+                <p>Roadmap пока не заполнен.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

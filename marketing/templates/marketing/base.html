@@ -1,0 +1,46 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Панацея{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'marketing/css/site.css' %}">
+</head>
+<body>
+<header class="site-header">
+    <div class="container nav-wrap">
+        <a class="brand" href="{% url 'marketing:home' %}">Панацея</a>
+        <button class="burger" type="button" id="burgerBtn" aria-label="Меню">☰</button>
+        <nav class="nav" id="mainNav">
+            <a class="{% if request.path == '/' %}active{% endif %}" href="{% url 'marketing:home' %}">Главная</a>
+            <a class="{% if '/contacts/' in request.path %}active{% endif %}" href="{% url 'marketing:contacts' %}">Контакты</a>
+            <a class="{% if '/deposits/' in request.path %}active{% endif %}" href="{% url 'marketing:deposits' %}">Депозиты</a>
+            <a class="{% if '/roadmap/' in request.path %}active{% endif %}" href="{% url 'marketing:roadmap' %}">Roadmap</a>
+            <a class="{% if '/services/' in request.path %}active{% endif %}" href="{% url 'marketing:services' %}">Услуги</a>
+            <a class="{% if '/faq/' in request.path %}active{% endif %}" href="{% url 'marketing:faq' %}">FAQ</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+    <div class="container">
+        <p>© {% now "Y" %} Панацея</p>
+        <div class="footer-links">
+            {% for contact in footer_contacts %}
+                <a href="{{ contact.url }}" target="_blank" rel="noopener">{{ contact.title }}</a>
+            {% endfor %}
+            {% if global_contacts_page and global_contacts_page.telegram_channel_url %}
+                <a href="{{ global_contacts_page.telegram_channel_url }}" target="_blank" rel="noopener">Telegram канал</a>
+            {% endif %}
+        </div>
+    </div>
+</footer>
+
+<script src="{% static 'marketing/js/site.js' %}"></script>
+</body>
+</html>

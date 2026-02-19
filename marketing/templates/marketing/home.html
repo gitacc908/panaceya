@@ -1,0 +1,61 @@
+{% extends 'marketing/base.html' %}
+
+{% block title %}Главная — Панацея{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <h1>{{ homepage.hero_title }}</h1>
+        <p class="subtitle">{{ homepage.hero_subtitle }}</p>
+        <p class="cta">{{ homepage.hero_cta_text }}</p>
+        <p class="currencies">{{ homepage.available_currencies }}</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2>{{ homepage.features_title }}</h2>
+        <div class="cards-grid">
+            {% for feature in features %}
+                <article class="card">
+                    {% if feature.image %}
+                        <img src="{{ feature.image.url }}" alt="{{ feature.title }}">
+                    {% endif %}
+                    <h3>{{ feature.title }}</h3>
+                    <p>{{ feature.text }}</p>
+                    {% if feature.use_telegram_channel_link and contacts_page and contacts_page.telegram_channel_url %}
+                        <a href="{{ contacts_page.telegram_channel_url }}" target="_blank" rel="noopener">{{ feature.telegram_link_label|default:'Перейти в канал' }}</a>
+                    {% endif %}
+                </article>
+            {% empty %}
+                <p>Блоки преимуществ пока не заполнены.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section section-soft">
+    <div class="container two-col">
+        <div>
+            <h2>{{ homepage.example_sites_title }}</h2>
+            <ul class="links-list">
+                {% for item in site_examples %}
+                    <li><a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title }}</a></li>
+                {% empty %}
+                    <li>Список пока пуст.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h2>{{ homepage.example_bots_title }}</h2>
+            <ul class="links-list">
+                {% for item in bot_examples %}
+                    <li><a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title }}</a></li>
+                {% empty %}
+                    <li>Список пока пуст.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

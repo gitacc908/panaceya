@@ -1,0 +1,25 @@
+{% extends 'marketing/base.html' %}
+
+{% block title %}Депозиты — Панацея{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container narrow">
+        <h1>{{ deposits_page.title }}</h1>
+        <p class="lead">{{ deposits_page.big_text }}</p>
+        <p class="total">Общая сумма депозитов: <strong>{{ deposits_page.total_deposits }}</strong></p>
+
+        <div class="cards-grid">
+            {% for forum in forums %}
+                <article class="card">
+                    <h3>{{ forum.forum_name }}</h3>
+                    <p>{{ forum.deposit_amount }}</p>
+                    <a href="{{ forum.forum_url }}" target="_blank" rel="noopener">Открыть форум</a>
+                </article>
+            {% empty %}
+                <p>Форумы пока не заполнены.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'marketing/base.html' %}
+
+{% block title %}Контакты — Панацея{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container narrow">
+        <h1>{{ contacts_page.title }}</h1>
+        <p>{{ contacts_page.description }}</p>
+
+        {% if contacts_page.telegram_channel_url %}
+            <p><a class="btn" href="{{ contacts_page.telegram_channel_url }}" target="_blank" rel="noopener">Telegram канал проекта</a></p>
+        {% endif %}
+
+        <div class="cards-grid">
+            {% for contact in contacts %}
+                <article class="card">
+                    <span class="badge">{{ contact.get_role_display }}</span>
+                    <h3>{{ contact.title }}</h3>
+                    {% if contact.description %}
+                        <p>{{ contact.description }}</p>
+                    {% endif %}
+                    <a href="{{ contact.url }}" target="_blank" rel="noopener">Перейти</a>
+                </article>
+            {% empty %}
+                <p>Контакты пока не заполнены.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

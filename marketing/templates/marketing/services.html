@@ -1,0 +1,23 @@
+{% extends 'marketing/base.html' %}
+
+{% block title %}Услуги — Панацея{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container narrow">
+        <h1>{{ services_page.title }}</h1>
+        <p>{{ services_page.intro_text }}</p>
+
+        <div class="cards-grid">
+            {% for item in items %}
+                <article class="card">
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.description }}</p>
+                </article>
+            {% empty %}
+                <p>Услуги пока не заполнены.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
