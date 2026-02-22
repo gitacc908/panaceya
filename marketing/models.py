@@ -140,29 +140,26 @@ class DepositForum(models.Model):
 		return f"{self.forum_name} — {self.deposit_amount}"
 
 
-class RoadmapPage(SingletonModel):
-	title = models.CharField(max_length=255, default="Roadmap")
-	intro_text = models.TextField(blank=True)
-
-	class Meta:
-		verbose_name = "Страница roadmap"
-		verbose_name_plural = "Страница roadmap"
-
-	def __str__(self):
-		return "Настройки Roadmap"
-
-
 class RoadmapItem(models.Model):
+	DONE = "DONE"
+	PLANNED = "PLANNED"
+	STATUS_CHOICES = (
+		(DONE, "Выполнено"),
+		(PLANNED, "Запланировано"),
+	)
+
 	title = models.CharField(max_length=255)
-	description = models.TextField(blank=True)
-	status_label = models.CharField(max_length=100, blank=True)
-	planned_date = models.DateField(blank=True, null=True)
+	text = models.TextField()
+	status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=PLANNED)
+	date_label = models.CharField(max_length=100, blank=True)
 	order = models.PositiveIntegerField(default=0)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
 
 	class Meta:
 		verbose_name = "Пункт roadmap"
 		verbose_name_plural = "Пункты roadmap"
-		ordering = ["order", "id"]
+		ordering = ["status", "order", "id"]
 
 	def __str__(self):
 		return self.title
@@ -218,5 +215,3 @@ class FaqItem(models.Model):
 
 	def __str__(self):
 		return self.question
-
-# Create your models here.

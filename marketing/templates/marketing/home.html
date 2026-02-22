@@ -1,18 +1,24 @@
 {% extends 'marketing/base.html' %}
+{% load static %}
 
 {% block title %}Главная — Панацея{% endblock %}
 
 {% block content %}
-<section class="hero">
-    <div class="container">
-        <h1>{{ homepage.hero_title }}</h1>
-        <p class="subtitle">{{ homepage.hero_subtitle }}</p>
-        <p class="cta">{{ homepage.hero_cta_text }}</p>
-        <p class="currencies">{{ homepage.available_currencies }}</p>
+<section id="home" class="hero anchor-section">
+    <div class="container hero-grid">
+        <div>
+            <h1>{{ homepage.hero_title }}</h1>
+            <p class="subtitle">{{ homepage.hero_subtitle }}</p>
+            <p class="cta">{{ homepage.hero_cta_text }}</p>
+            <p class="currencies">{{ homepage.available_currencies }}</p>
+        </div>
+        <div class="hero-media">
+            <img src="{% static 'marketing/img/logo-text-color.png' %}" alt="Панацея" class="hero-logo">
+        </div>
     </div>
 </section>
 
-<section class="section">
+<section class="section anchor-section">
     <div class="container">
         <h2>{{ homepage.features_title }}</h2>
         <div class="cards-grid">
@@ -34,7 +40,150 @@
     </div>
 </section>
 
-<section class="section section-soft">
+<section id="contacts" class="section anchor-section">
+    <div class="container narrow contacts-section">
+        <div class="contacts-head">
+            <h1>{% if contacts_page %}{{ contacts_page.title }}{% else %}Контакты{% endif %}</h1>
+            {% if contacts_page and contacts_page.description %}
+                <p class="contacts-description">{{ contacts_page.description }}</p>
+            {% endif %}
+            {% if contacts_page and contacts_page.telegram_channel_url %}
+                <div class="contacts-actions">
+                    <a class="btn" href="{{ contacts_page.telegram_channel_url }}" target="_blank" rel="noopener">Telegram канал проекта</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="cards-grid contacts-grid">
+            {% for contact in contacts %}
+                <article class="card contact-card">
+                    <span class="badge">{{ contact.get_role_display }}</span>
+                    <h3>{{ contact.title }}</h3>
+                    {% if contact.description %}
+                        <p>{{ contact.description }}</p>
+                    {% endif %}
+                    <a class="contact-link" href="{{ contact.url }}" target="_blank" rel="noopener">Перейти</a>
+                </article>
+            {% empty %}
+                <p>Контакты пока не заполнены.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="deposits" class="section anchor-section">
+    <div class="container narrow">
+        <h1>{% if deposits_page %}{{ deposits_page.title }}{% else %}Депозиты{% endif %}</h1>
+        {% if deposits_page and deposits_page.big_text %}
+            <p class="lead">{{ deposits_page.big_text }}</p>
+        {% endif %}
+        {% if deposits_page and deposits_page.total_deposits %}
+            <p class="total">Общая сумма депозитов: <strong>{{ deposits_page.total_deposits }}</strong></p>
+        {% endif %}
+
+        <div class="cards-grid">
+            {% for forum in forums %}
+                <article class="card">
+                    <h3>{{ forum.forum_name }}</h3>
+                    <p>{{ forum.deposit_amount }}</p>
+                    <a href="{{ forum.forum_url }}" target="_blank" rel="noopener">Открыть форум</a>
+                </article>
+            {% empty %}
+                <p>Форумы пока не заполнены.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="roadmap" class="section anchor-section">
+    <div class="container narrow">
+        <h1>Roadmap</h1>
+
+        {% if items_all %}
+            <div class="roadmap-timeline">
+                {% if done_items %}
+                    <div class="roadmap-group roadmap-group-done">
+                        {% for item in done_items %}
+                            <article class="card roadmap-item roadmap-item-done">
+                                <span class="roadmap-dot" aria-hidden="true"></span>
+                                <div class="roadmap-item-head">
+                                    <span class="roadmap-status roadmap-status-done">{{ item.get_status_display }}</span>
+                                    {% if item.date_label %}
+                                        <span class="roadmap-date">{{ item.date_label }}</span>
+                                    {% endif %}
+                                </div>
+                                <h3>{{ item.title }}</h3>
+                                <p>{{ item.text }}</p>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if planned_items %}
+                    <div class="roadmap-group roadmap-group-planned">
+                        {% for item in planned_items %}
+                            <article class="card roadmap-item roadmap-item-planned">
+                                <span class="roadmap-dot" aria-hidden="true"></span>
+                                <div class="roadmap-item-head">
+                                    <span class="roadmap-status roadmap-status-planned">{{ item.get_status_display }}</span>
+                                    {% if item.date_label %}
+                                        <span class="roadmap-date">{{ item.date_label }}</span>
+                                    {% endif %}
+                                </div>
+                                <h3>{{ item.title }}</h3>
+                                <p>{{ item.text }}</p>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <p>Roadmap пока не заполнен.</p>
+        {% endif %}
+    </div>
+</section>
+
+<section id="services" class="section anchor-section">
+    <div class="container narrow">
+        <h1>{% if services_page %}{{ services_page.title }}{% else %}Услуги{% endif %}</h1>
+        {% if services_page and services_page.intro_text %}
+            <p>{{ services_page.intro_text }}</p>
+        {% endif %}
+
+        <div class="cards-grid">
+            {% for item in service_items %}
+                <article class="card">
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.description }}</p>
+                </article>
+            {% empty %}
+                <p>Услуги пока не заполнены.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="faq" class="section anchor-section">
+    <div class="container narrow">
+        <h1>{% if faq_page %}{{ faq_page.title }}{% else %}FAQ{% endif %}</h1>
+        {% if faq_page and faq_page.intro_text %}
+            <p>{{ faq_page.intro_text }}</p>
+        {% endif %}
+
+        <div class="faq-list">
+            {% for item in faq_items %}
+                <article class="card">
+                    <h3>{{ item.question }}</h3>
+                    <p>{{ item.answer }}</p>
+                </article>
+            {% empty %}
+                <p>FAQ пока не заполнен.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section section-soft anchor-section">
     <div class="container two-col">
         <div>
             <h2>{{ homepage.example_sites_title }}</h2>

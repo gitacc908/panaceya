@@ -31,7 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_daisy',
     'django.contrib.admin',
+    'django.contrib.humanize',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -119,3 +121,23 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+DAISY_SETTINGS = {
+    'SITE_TITLE': 'Панацея Admin',
+    'SITE_HEADER': 'Панацея: Администрирование',
+    'INDEX_TITLE': 'Панель управления',
+    'SITE_LOGO': '/static/marketing/img/icon-color.png',
+    'DEFAULT_THEME': 'garden',
+    'DEFAULT_THEME_DARK': 'dark',
+    'SHOW_THEME_SELECTOR': True,
+    'SHOW_CHANGELIST_FILTER': True,
+    'THEME_LIST': [
+        {'name': 'Garden', 'value': 'garden'},
+        {'name': 'Light', 'value': 'light'},
+        {'name': 'Dark', 'value': 'dark'},
+        {'name': 'Lemonade', 'value': 'lemonade'},
+        {'name': 'CMYK', 'value': 'cmyk'},
+    ],
+    'SIDEBAR_FOOTNOTE': 'Panaceya',
+}

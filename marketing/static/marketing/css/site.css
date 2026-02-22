@@ -1,22 +1,84 @@
 :root {
     --green-main: #008631;
+    --orange-main: #f59e0b;
     --green-100: #eaf8ef;
     --green-200: #d7f1df;
     --green-300: #bfe8cd;
     --text-main: #18311f;
     --shadow: 0 10px 25px rgba(0, 120, 45, 0.08);
+    --font-body: "Nunito Sans", "Segoe UI", Roboto, Arial, sans-serif;
+    --font-heading: "Manrope", "Segoe UI", Roboto, Arial, sans-serif;
+    --header-height: 72px;
 }
 
 * {
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
-    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-body);
+    font-weight: 500;
     color: var(--text-main);
-    background: #fff;
+    background: #f2fbf4;
     line-height: 1.55;
+}
+
+h1,
+h2,
+h3,
+.nav a,
+.btn {
+    font-family: var(--font-heading);
+}
+
+.site-body {
+    position: relative;
+    min-height: 100vh;
+    isolation: isolate;
+    overflow-x: clip;
+}
+
+.site-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.site-bg::before,
+.site-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.site-bg::before {
+    background:
+        radial-gradient(110% 56% at 50% 100%, rgba(0, 134, 49, 0.17) 0%, rgba(0, 134, 49, 0) 74%),
+        linear-gradient(180deg, #f7fff9 0%, #eff9f2 52%, #eaf7ee 100%);
+}
+
+.site-bg::after {
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 720' preserveAspectRatio='none'%3E%3Cpath fill='%23008631' fill-opacity='0.18' d='M0 560L60 544C120 528 240 496 360 501.3C480 507 600 549 720 565.3C840 581 960 571 1080 554.7C1200 539 1320 517 1380 506.7L1440 496L1440 720L1380 720C1320 720 1200 720 1080 720C960 720 840 720 720 720C600 720 480 720 360 720C240 720 120 720 60 720L0 720Z'/%3E%3Cpath fill='%2347c770' fill-opacity='0.24' d='M0 614L48 608C96 602 192 592 288 573.3C384 555 480 528 576 517.3C672 507 768 512 864 528C960 544 1056 571 1152 581.3C1248 592 1344 587 1392 584L1440 581L1440 720L1392 720C1344 720 1248 720 1152 720C1056 720 960 720 864 720C768 720 672 720 576 720C480 720 384 720 288 720C192 720 96 720 48 720L0 720Z'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 720' preserveAspectRatio='none'%3E%3Cpath fill='%2389df9f' fill-opacity='0.28' d='M0 636L80 621.3C160 607 320 577 480 560C640 544 800 539 960 549.3C1120 560 1280 587 1360 600L1440 614L1440 720L1360 720C1280 720 1120 720 960 720C800 720 640 720 480 720C320 720 160 720 80 720L0 720Z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat, no-repeat;
+    background-size: 100% clamp(260px, 42vh, 520px), 120% clamp(220px, 36vh, 460px);
+    background-position: center bottom, 55% bottom;
+    filter: blur(0.25px);
+}
+
+.site-header,
+.site-main,
+.site-footer {
+    position: relative;
+    z-index: 1;
 }
 
 .container {
@@ -33,28 +95,45 @@ body {
     top: 0;
     z-index: 40;
     background: var(--green-main);
+    height: var(--header-height);
 }
 
 .nav-wrap {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 68px;
+    min-height: var(--header-height);
     gap: 16px;
 }
 
 .brand {
     color: #fff;
     text-decoration: none;
-    font-weight: 700;
-    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 0;
+}
+
+/* .brand-logo-icon {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+} */
+
+.brand-logo-text {
+    display: block;
+    height: clamp(34px, 5vw, 46px);
+    width: auto;
+    max-height: calc(var(--header-height) - 16px);
+    object-fit: contain;
 }
 
 .nav {
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 68px;
+    top: var(--header-height);
     left: 0;
     right: 0;
     background: var(--green-main);
@@ -91,6 +170,28 @@ body {
     padding: 72px 0 48px;
 }
 
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
+.hero-media {
+    display: flex;
+    justify-content: center;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid var(--green-300);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+.hero-logo {
+    width: min(420px, 100%);
+    height: auto;
+}
+
 .hero h1 {
     font-size: clamp(1.7rem, 4.5vw, 3rem);
     margin: 0 0 14px;
@@ -117,9 +218,13 @@ body {
     padding: 52px 0;
 }
 
-.section-soft {
-    background: var(--green-100);
+.anchor-section {
+    scroll-margin-top: 88px;
 }
+
+/* .section-soft {
+    background: var(--green-100);
+} */
 
 h2 {
     font-size: clamp(1.4rem, 3.2vw, 2rem);
@@ -189,11 +294,174 @@ h2 {
     margin-bottom: 8px;
 }
 
+.roadmap-timeline {
+    margin-top: 22px;
+}
+
+.roadmap-group {
+    position: relative;
+    display: grid;
+    gap: 16px;
+    padding-left: 48px;
+}
+
+.roadmap-group::before {
+    content: "";
+    position: absolute;
+    left: 13px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 999px;
+}
+
+.roadmap-group-done::before {
+    background: var(--green-main);
+}
+
+.roadmap-group-planned::before {
+    background: var(--orange-main);
+}
+
+.roadmap-item {
+    position: relative;
+    border-color: var(--green-300);
+}
+
+.roadmap-item:first-child {
+    margin-top: 4px;
+}
+
+.roadmap-item:last-child {
+    margin-bottom: 4px;
+}
+
+.roadmap-dot {
+    position: absolute;
+    left: -42px;
+    top: 20px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 1px rgba(24, 49, 31, 0.1);
+}
+
+.roadmap-item-done .roadmap-dot {
+    background: var(--green-main);
+}
+
+.roadmap-item-planned .roadmap-dot {
+    background: var(--orange-main);
+}
+
+.roadmap-item-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.roadmap-status {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.roadmap-status-done {
+    color: #0a5d24;
+    background: var(--green-200);
+}
+
+.roadmap-status-planned {
+    color: #8a5200;
+    background: #ffedd5;
+}
+
+.roadmap-date {
+    font-size: 0.86rem;
+    color: #3f5b48;
+}
+
+.roadmap-item p {
+    margin-bottom: 0;
+}
+
+.contacts-section {
+    display: grid;
+    gap: 18px;
+}
+
+.contacts-head {
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid var(--green-300);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: var(--shadow);
+}
+
+.contacts-head h1 {
+    margin: 0 0 10px;
+}
+
+.contacts-description {
+    margin: 0;
+    color: #2d5a3a;
+}
+
+.contacts-actions {
+    margin-top: 14px;
+}
+
+.contacts-grid {
+    align-items: stretch;
+}
+
+.contact-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.contact-card .badge {
+    margin-bottom: 2px;
+}
+
+.contact-card h3 {
+    margin-bottom: 0;
+}
+
+.contact-card p {
+    margin-top: 0;
+    color: #2f5140;
+}
+
+.contact-link {
+    margin-top: auto;
+    font-weight: 700;
+}
+
 .site-footer {
-    background: #f7fcf8;
-    border-top: 1px solid #e4efe8;
+    background: var(--green-main);
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
     padding: 22px 0;
     margin-top: 32px;
+    color: #e8fff0;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-logo {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
 }
 
 .footer-links {
@@ -205,6 +473,10 @@ h2 {
 .footer-links a,
 a {
     color: #0a7732;
+}
+
+.site-footer a {
+    color: #e8fff0;
 }
 
 .total {
@@ -231,5 +503,21 @@ a {
 
     .two-col {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero-grid {
+        grid-template-columns: 1.25fr 0.75fr;
+    }
+
+    .roadmap-timeline {
+        max-width: 860px;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-bg::after {
+        opacity: 0.86;
+        background-size: 170% clamp(200px, 34vh, 340px), 200% clamp(170px, 31vh, 300px);
+        background-position: 44% bottom, 58% bottom;
     }
 }

@@ -12,7 +12,6 @@ from .models import (
 	FeatureBlock,
 	HomePage,
 	RoadmapItem,
-	RoadmapPage,
 	ServiceItem,
 	ServicesPage,
 )
@@ -85,17 +84,12 @@ class DepositForumAdmin(admin.ModelAdmin):
 	ordering = ("order", "id")
 
 
-@admin.register(RoadmapPage)
-class RoadmapPageAdmin(SingletonAdminMixin, admin.ModelAdmin):
-	list_display = ("title",)
-
-
 @admin.register(RoadmapItem)
 class RoadmapItemAdmin(admin.ModelAdmin):
-	list_display = ("title", "status_label", "planned_date", "order")
-	list_filter = ("status_label",)
-	search_fields = ("title", "description")
-	ordering = ("order", "id")
+	list_display = ("title", "status", "order", "updated_at")
+	list_filter = ("status",)
+	search_fields = ("title", "text")
+	ordering = ("status", "order", "id")
 
 
 @admin.register(ServicesPage)

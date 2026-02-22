@@ -4,26 +4,50 @@
 
 {% block content %}
 <section class="section">
-    <div class="container narrow">
-        <h1>{{ roadmap_page.title }}</h1>
-        <p>{{ roadmap_page.intro_text }}</p>
+	<div class="container narrow">
+		<h1>Roadmap</h1>
 
-        <div class="timeline">
-            {% for item in items %}
-                <article class="card timeline-item">
-                    {% if item.status_label %}
-                        <span class="badge">{{ item.status_label }}</span>
-                    {% endif %}
-                    <h3>{{ item.title }}</h3>
-                    {% if item.planned_date %}
-                        <p><strong>{{ item.planned_date }}</strong></p>
-                    {% endif %}
-                    <p>{{ item.description }}</p>
-                </article>
-            {% empty %}
-                <p>Roadmap пока не заполнен.</p>
-            {% endfor %}
-        </div>
-    </div>
+		{% if items_all %}
+			<div class="roadmap-timeline">
+				{% if done_items %}
+					<div class="roadmap-group roadmap-group-done">
+						{% for item in done_items %}
+							<article class="card roadmap-item roadmap-item-done">
+								<span class="roadmap-dot" aria-hidden="true"></span>
+								<div class="roadmap-item-head">
+									<span class="roadmap-status roadmap-status-done">{{ item.get_status_display }}</span>
+									{% if item.date_label %}
+										<span class="roadmap-date">{{ item.date_label }}</span>
+									{% endif %}
+								</div>
+								<h3>{{ item.title }}</h3>
+								<p>{{ item.text }}</p>
+							</article>
+						{% endfor %}
+					</div>
+				{% endif %}
+
+				{% if planned_items %}
+					<div class="roadmap-group roadmap-group-planned">
+						{% for item in planned_items %}
+							<article class="card roadmap-item roadmap-item-planned">
+								<span class="roadmap-dot" aria-hidden="true"></span>
+								<div class="roadmap-item-head">
+									<span class="roadmap-status roadmap-status-planned">{{ item.get_status_display }}</span>
+									{% if item.date_label %}
+										<span class="roadmap-date">{{ item.date_label }}</span>
+									{% endif %}
+								</div>
+								<h3>{{ item.title }}</h3>
+								<p>{{ item.text }}</p>
+							</article>
+						{% endfor %}
+					</div>
+				{% endif %}
+			</div>
+		{% else %}
+			<p>Roadmap пока не заполнен.</p>
+		{% endif %}
+	</div>
 </section>
 {% endblock %}

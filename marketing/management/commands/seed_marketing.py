@@ -11,7 +11,6 @@ from marketing.models import (
     FeatureBlock,
     HomePage,
     RoadmapItem,
-    RoadmapPage,
     ServiceItem,
     ServicesPage,
 )
@@ -152,27 +151,41 @@ class Command(BaseCommand):
                 },
             )
 
-        RoadmapPage.objects.get_or_create(
-            pk=1,
-            defaults={
-                "title": "Roadmap",
-                "intro_text": "Ближайшие этапы развития платформы.",
-            },
-        )
-
         for index, item in enumerate(
             [
-                ("Релиз обновлённой панели", "Новый интерфейс управления магазинами.", "В работе"),
-                ("Расширение интеграций", "Добавление новых платёжных и сервисных интеграций.", "План"),
-                ("Новая аналитика", "Расширенные отчёты и экспорт данных.", "План"),
+                (
+                    "Запуск обновлённой панели",
+                    "Новый интерфейс управления магазинами и ролями доступа.",
+                    RoadmapItem.DONE,
+                    "Q4 2025",
+                ),
+                (
+                    "Автоматизация отчётов",
+                    "Сводки по продажам и выплатам в одном дашборде.",
+                    RoadmapItem.DONE,
+                    "Январь 2026",
+                ),
+                (
+                    "Мультиязычный кабинет",
+                    "Поддержка RU/EN для команды и партнёров.",
+                    RoadmapItem.PLANNED,
+                    "Q2 2026",
+                ),
+                (
+                    "Новые платежные интеграции",
+                    "Добавление дополнительных провайдеров и резервных каналов оплаты.",
+                    RoadmapItem.PLANNED,
+                    "Q3 2026",
+                ),
             ],
             start=1,
         ):
             RoadmapItem.objects.get_or_create(
                 title=item[0],
                 defaults={
-                    "description": item[1],
-                    "status_label": item[2],
+                    "text": item[1],
+                    "status": item[2],
+                    "date_label": item[3],
                     "order": index,
                 },
             )

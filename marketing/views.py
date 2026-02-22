@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.urls import reverse
 
 from .models import (
 	ContactLink,
@@ -10,7 +11,6 @@ from .models import (
 	FeatureBlock,
 	HomePage,
 	RoadmapItem,
-	RoadmapPage,
 	ServiceItem,
 	ServicesPage,
 )
@@ -22,6 +22,16 @@ def home_view(request):
 	site_examples = ExampleLink.objects.filter(link_type=ExampleLink.SITE)
 	bot_examples = ExampleLink.objects.filter(link_type=ExampleLink.BOT)
 	contacts_page = ContactsPage.objects.first()
+	contacts = ContactLink.objects.all()
+	deposits_page = DepositsPage.objects.first()
+	forums = deposits_page.forums.all() if deposits_page else []
+	done_items = RoadmapItem.objects.filter(status=RoadmapItem.DONE).order_by("order", "id")
+	planned_items = RoadmapItem.objects.filter(status=RoadmapItem.PLANNED).order_by("order", "id")
+	items_all = [*done_items, *planned_items]
+	services_page = ServicesPage.objects.first()
+	service_items = ServiceItem.objects.all()
+	faq_page = FaqPage.objects.first()
+	faq_items = FaqItem.objects.all()
 
 	return render(
 		request,
@@ -32,72 +42,37 @@ def home_view(request):
 			"site_examples": site_examples,
 			"bot_examples": bot_examples,
 			"contacts_page": contacts_page,
+			"contacts": contacts,
+			"deposits_page": deposits_page,
+			"forums": forums,
+			"done_items": done_items,
+			"planned_items": planned_items,
+			"items_all": items_all,
+			"services_page": services_page,
+			"service_items": service_items,
+			"faq_page": faq_page,
+			"faq_items": faq_items,
 		},
 	)
 
 
 def contacts_view(request):
-	contacts_page = ContactsPage.objects.first()
-	contacts = ContactLink.objects.all()
-	return render(
-		request,
-		"marketing/contacts.html",
-		{
-			"contacts_page": contacts_page,
-			"contacts": contacts,
-		},
-	)
+	return redirect(f"{reverse('marketing:home')}#contacts")
 
 
 def deposits_view(request):
-	deposits_page = DepositsPage.objects.first()
-	forums = deposits_page.forums.all() if deposits_page else []
-	return render(
-		request,
-		"marketing/deposits.html",
-		{
-			"deposits_page": deposits_page,
-			"forums": forums,
-		},
-	)
+	return redirect(f"{reverse('marketing:home')}#deposits")
 
 
 def roadmap_view(request):
-	roadmap_page = RoadmapPage.objects.first()
-	items = RoadmapItem.objects.all()
-	return render(
-		request,
-		"marketing/roadmap.html",
-		{
-			"roadmap_page": roadmap_page,
-			"items": items,
-		},
-	)
+	return redirect(f"{reverse('marketing:home')}#roadmap")
 
 
 def services_view(request):
-	services_page = ServicesPage.objects.first()
-	items = ServiceItem.objects.all()
-	return render(
-		request,
-		"marketing/services.html",
-		{
-			"services_page": services_page,
-			"items": items,
-		},
-	)
+	return redirect(f"{reverse('marketing:home')}#services")
 
 
 def faq_view(request):
-	faq_page = FaqPage.objects.first()
-	items = FaqItem.objects.all()
-	return render(
-		request,
-		"marketing/faq.html",
-		{
-			"faq_page": faq_page,
-			"items": items,
-		},
-	)
+	return redirect(f"{reverse('marketing:home')}#faq")
 
 # Create your views here.
