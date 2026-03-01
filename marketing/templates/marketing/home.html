@@ -4,28 +4,137 @@
 {% block title %}Главная — Панацея{% endblock %}
 
 {% block content %}
-<section id="home" class="hero anchor-section">
+<section id="home" class="hero anchor-section" data-reveal>
     <div class="container hero-grid">
-        <div>
+        <div class="hero-copy glass-panel" data-reveal>
+            <p class="eyebrow">Платформа роста</p>
             <h1>{{ homepage.hero_title }}</h1>
             <p class="subtitle">{{ homepage.hero_subtitle }}</p>
             <p class="cta">{{ homepage.hero_cta_text }}</p>
+            <div class="hero-actions">
+                <a class="btn" href="#contacts">Связаться с командой</a>
+                <a class="btn btn-light" href="#services">Смотреть услуги</a>
+            </div>
             <p class="currencies">{{ homepage.available_currencies }}</p>
         </div>
-        <div class="hero-media">
-            <img src="{% static 'marketing/img/logo-text-color.png' %}" alt="Панацея" class="hero-logo">
+        <div class="hero-media glass-panel{% if hero_examples %} has-slider{% endif %}" data-reveal>
+            {% if hero_examples %}
+                <div class="hero-slider example-carousel" data-carousel data-carousel-mode="slideshow" data-carousel-autoplay="2000">
+                    <button class="carousel-btn hero-slider-btn" type="button" data-carousel-prev aria-label="Предыдущий слайд">‹</button>
+                    <div class="carousel-viewport hero-slider-viewport" data-carousel-viewport>
+                        <div class="carousel-track" data-carousel-track>
+                            {% for item in hero_examples %}
+                                <article class="carousel-slide">
+                                    <a class="carousel-link" href="{{ item.url }}" target="_blank" rel="noopener">
+                                        <img src="{{ item.image.url }}" alt="{{ item.title }}" class="hero-logo hero-slide-image">
+                                        <span class="hero-slide-caption">{{ item.title }}</span>
+                                    </a>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <button class="carousel-btn hero-slider-btn" type="button" data-carousel-next aria-label="Следующий слайд">›</button>
+                    <div class="carousel-dots hero-slider-dots" data-carousel-dots>
+                        {% for item in hero_examples %}
+                            <button type="button" class="carousel-dot{% if forloop.first %} is-active{% endif %}" data-carousel-dot="{{ forloop.counter0 }}" aria-label="Слайд {{ forloop.counter }}"></button>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <img src="{% static 'marketing/img/logo-text-color.png' %}" alt="Панацея" class="hero-logo">
+            {% endif %}
         </div>
     </div>
 </section>
 
-<section class="section anchor-section">
+<section class="section section-showcase" data-reveal>
     <div class="container">
-        <h2>{{ homepage.features_title }}</h2>
-        <div class="cards-grid">
+        <div class="section-head" data-reveal>
+            <p class="section-kicker">Витрина решений</p>
+            <h2>Примеры, которые уже работают</h2>
+            <p>Покажите клиентам, как выглядит ваш продукт в деле: сайты и боты в одном визуальном блоке.</p>
+        </div>
+        <div class="two-col showcase-grid">
+            <article class="glass-panel showcase-panel" data-reveal>
+                <h3>{{ homepage.example_sites_title }}</h3>
+                {% if site_examples %}
+                    <div class="example-carousel showcase-carousel" data-carousel>
+                        <button class="carousel-btn" type="button" data-carousel-prev aria-label="Предыдущий слайд">‹</button>
+                        <div class="carousel-viewport" data-carousel-viewport>
+                            <div class="carousel-track" data-carousel-track>
+                                {% for item in site_examples %}
+                                    <article class="carousel-slide">
+                                        <a class="carousel-link" href="{{ item.url }}" target="_blank" rel="noopener">
+                                            {% if item.image %}
+                                                <img src="{{ item.image.url }}" alt="{{ item.title }}" class="carousel-image">
+                                            {% else %}
+                                                <div class="carousel-fallback">{{ item.title }}</div>
+                                            {% endif %}
+                                            <span class="carousel-caption">{{ item.title }}</span>
+                                        </a>
+                                    </article>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <button class="carousel-btn" type="button" data-carousel-next aria-label="Следующий слайд">›</button>
+                        <div class="carousel-dots" data-carousel-dots>
+                            {% for item in site_examples %}
+                                <button type="button" class="carousel-dot{% if forloop.first %} is-active{% endif %}" data-carousel-dot="{{ forloop.counter0 }}" aria-label="Слайд {{ forloop.counter }}"></button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="empty-note">Список пока пуст.</p>
+                {% endif %}
+            </article>
+
+            <article class="glass-panel showcase-panel" data-reveal>
+                <h3>{{ homepage.example_bots_title }}</h3>
+                {% if bot_examples %}
+                    <div class="example-carousel showcase-carousel" data-carousel>
+                        <button class="carousel-btn" type="button" data-carousel-prev aria-label="Предыдущий слайд">‹</button>
+                        <div class="carousel-viewport" data-carousel-viewport>
+                            <div class="carousel-track" data-carousel-track>
+                                {% for item in bot_examples %}
+                                    <article class="carousel-slide">
+                                        <a class="carousel-link" href="{{ item.url }}" target="_blank" rel="noopener">
+                                            {% if item.image %}
+                                                <img src="{{ item.image.url }}" alt="{{ item.title }}" class="carousel-image">
+                                            {% else %}
+                                                <div class="carousel-fallback">{{ item.title }}</div>
+                                            {% endif %}
+                                            <span class="carousel-caption">{{ item.title }}</span>
+                                        </a>
+                                    </article>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <button class="carousel-btn" type="button" data-carousel-next aria-label="Следующий слайд">›</button>
+                        <div class="carousel-dots" data-carousel-dots>
+                            {% for item in bot_examples %}
+                                <button type="button" class="carousel-dot{% if forloop.first %} is-active{% endif %}" data-carousel-dot="{{ forloop.counter0 }}" aria-label="Слайд {{ forloop.counter }}"></button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="empty-note">Список пока пуст.</p>
+                {% endif %}
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="section-head" data-reveal>
+            <p class="section-kicker">Преимущества</p>
+            <h2>{{ homepage.features_title }}</h2>
+        </div>
+        <div class="cards-grid cards-grid-3">
             {% for feature in features %}
-                <article class="card">
+                <article class="card feature-card" data-reveal>
                     {% if feature.image %}
-                        <img src="{{ feature.image.url }}" alt="{{ feature.title }}">
+                        <img src="{{ feature.image.url }}" alt="{{ feature.title }}" class="feature-image">
                     {% endif %}
                     <h3>{{ feature.title }}</h3>
                     <p>{{ feature.text }}</p>
@@ -34,16 +143,146 @@
                     {% endif %}
                 </article>
             {% empty %}
-                <p>Блоки преимуществ пока не заполнены.</p>
+                <p class="empty-note">Блоки преимуществ пока не заполнены.</p>
             {% endfor %}
         </div>
     </div>
 </section>
 
-<section id="contacts" class="section anchor-section">
+<section id="services" class="section anchor-section section-soft" data-reveal>
+    <div class="container narrow">
+        <div class="section-head" data-reveal>
+            <p class="section-kicker">Что вы получаете</p>
+            <h2>{% if services_page %}{{ services_page.title }}{% else %}Услуги{% endif %}</h2>
+            {% if services_page and services_page.intro_text %}
+                <p>{{ services_page.intro_text }}</p>
+            {% endif %}
+        </div>
+
+        <div class="cards-grid cards-grid-2">
+            {% for item in service_items %}
+                <article class="card service-card" data-reveal>
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.description }}</p>
+                </article>
+            {% empty %}
+                <p class="empty-note">Услуги пока не заполнены.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="deposits" class="section anchor-section" data-reveal>
+    <div class="container narrow">
+        <div class="deposits-summary glass-panel" data-reveal>
+            <h2>{% if deposits_page %}{{ deposits_page.title }}{% else %}Депозиты{% endif %}</h2>
+            {% if deposits_page and deposits_page.big_text %}
+                <p class="lead">{{ deposits_page.big_text }}</p>
+            {% endif %}
+            {% if deposits_page and deposits_page.total_deposits %}
+                <p class="total">Общая сумма депозитов: <strong>{{ deposits_page.total_deposits }}</strong></p>
+            {% endif %}
+        </div>
+
+        <div class="cards-grid cards-grid-2">
+            {% for forum in forums %}
+                <article class="card" data-reveal>
+                    <h3>{{ forum.forum_name }}</h3>
+                    <p>{{ forum.deposit_amount }}</p>
+                    <a href="{{ forum.forum_url }}" target="_blank" rel="noopener">Открыть форум</a>
+                </article>
+            {% empty %}
+                <p class="empty-note">Форумы пока не заполнены.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="roadmap" class="section anchor-section section-soft" data-reveal>
+    <div class="container narrow">
+        <div class="section-head" data-reveal>
+            <p class="section-kicker">План развития</p>
+            <h2>Roadmap</h2>
+        </div>
+
+        {% if items_all %}
+            <div class="roadmap-grid">
+                {% if done_items %}
+                    <div class="roadmap-column" data-reveal>
+                        <h3 class="roadmap-column-title roadmap-column-title-done">Выполнено</h3>
+                        <div class="roadmap-group roadmap-group-done">
+                            {% for item in done_items %}
+                                <article class="card roadmap-item roadmap-item-done">
+                                    <span class="roadmap-dot" aria-hidden="true"></span>
+                                    <div class="roadmap-item-head">
+                                        <span class="roadmap-status roadmap-status-done">{{ item.get_status_display }}</span>
+                                        {% if item.date_label %}
+                                            <span class="roadmap-date">{{ item.date_label }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <h3>{{ item.title }}</h3>
+                                    <p>{{ item.text }}</p>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if planned_items %}
+                    <div class="roadmap-column" data-reveal>
+                        <h3 class="roadmap-column-title roadmap-column-title-planned">Запланировано</h3>
+                        <div class="roadmap-group roadmap-group-planned">
+                            {% for item in planned_items %}
+                                <article class="card roadmap-item roadmap-item-planned">
+                                    <span class="roadmap-dot" aria-hidden="true"></span>
+                                    <div class="roadmap-item-head">
+                                        <span class="roadmap-status roadmap-status-planned">{{ item.get_status_display }}</span>
+                                        {% if item.date_label %}
+                                            <span class="roadmap-date">{{ item.date_label }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <h3>{{ item.title }}</h3>
+                                    <p>{{ item.text }}</p>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <p class="empty-note">Roadmap пока не заполнен.</p>
+        {% endif %}
+    </div>
+</section>
+
+<section id="faq" class="section anchor-section" data-reveal>
+    <div class="container narrow">
+        <div class="section-head" data-reveal>
+            <p class="section-kicker">Частые вопросы</p>
+            <h2>{% if faq_page %}{{ faq_page.title }}{% else %}FAQ{% endif %}</h2>
+            {% if faq_page and faq_page.intro_text %}
+                <p>{{ faq_page.intro_text }}</p>
+            {% endif %}
+        </div>
+
+        <div class="faq-list">
+            {% for item in faq_items %}
+                <article class="card faq-card" data-reveal>
+                    <h3>{{ item.question }}</h3>
+                    <p>{{ item.answer }}</p>
+                </article>
+            {% empty %}
+                <p class="empty-note">FAQ пока не заполнен.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="contacts" class="section anchor-section section-cta" data-reveal>
     <div class="container narrow contacts-section">
-        <div class="contacts-head">
-            <h1>{% if contacts_page %}{{ contacts_page.title }}{% else %}Контакты{% endif %}</h1>
+        <div class="contacts-head glass-panel" data-reveal>
+            <p class="section-kicker">Контакты</p>
+            <h2>{% if contacts_page %}{{ contacts_page.title }}{% else %}Контакты{% endif %}</h2>
             {% if contacts_page and contacts_page.description %}
                 <p class="contacts-description">{{ contacts_page.description }}</p>
             {% endif %}
@@ -54,9 +293,9 @@
             {% endif %}
         </div>
 
-        <div class="cards-grid contacts-grid">
+        <div class="cards-grid cards-grid-2 contacts-grid">
             {% for contact in contacts %}
-                <article class="card contact-card">
+                <article class="card contact-card" data-reveal>
                     <span class="badge">{{ contact.get_role_display }}</span>
                     <h3>{{ contact.title }}</h3>
                     {% if contact.description %}
@@ -65,145 +304,8 @@
                     <a class="contact-link" href="{{ contact.url }}" target="_blank" rel="noopener">Перейти</a>
                 </article>
             {% empty %}
-                <p>Контакты пока не заполнены.</p>
+                <p class="empty-note">Контакты пока не заполнены.</p>
             {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section id="deposits" class="section anchor-section">
-    <div class="container narrow">
-        <h1>{% if deposits_page %}{{ deposits_page.title }}{% else %}Депозиты{% endif %}</h1>
-        {% if deposits_page and deposits_page.big_text %}
-            <p class="lead">{{ deposits_page.big_text }}</p>
-        {% endif %}
-        {% if deposits_page and deposits_page.total_deposits %}
-            <p class="total">Общая сумма депозитов: <strong>{{ deposits_page.total_deposits }}</strong></p>
-        {% endif %}
-
-        <div class="cards-grid">
-            {% for forum in forums %}
-                <article class="card">
-                    <h3>{{ forum.forum_name }}</h3>
-                    <p>{{ forum.deposit_amount }}</p>
-                    <a href="{{ forum.forum_url }}" target="_blank" rel="noopener">Открыть форум</a>
-                </article>
-            {% empty %}
-                <p>Форумы пока не заполнены.</p>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section id="roadmap" class="section anchor-section">
-    <div class="container narrow">
-        <h1>Roadmap</h1>
-
-        {% if items_all %}
-            <div class="roadmap-timeline">
-                {% if done_items %}
-                    <div class="roadmap-group roadmap-group-done">
-                        {% for item in done_items %}
-                            <article class="card roadmap-item roadmap-item-done">
-                                <span class="roadmap-dot" aria-hidden="true"></span>
-                                <div class="roadmap-item-head">
-                                    <span class="roadmap-status roadmap-status-done">{{ item.get_status_display }}</span>
-                                    {% if item.date_label %}
-                                        <span class="roadmap-date">{{ item.date_label }}</span>
-                                    {% endif %}
-                                </div>
-                                <h3>{{ item.title }}</h3>
-                                <p>{{ item.text }}</p>
-                            </article>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-
-                {% if planned_items %}
-                    <div class="roadmap-group roadmap-group-planned">
-                        {% for item in planned_items %}
-                            <article class="card roadmap-item roadmap-item-planned">
-                                <span class="roadmap-dot" aria-hidden="true"></span>
-                                <div class="roadmap-item-head">
-                                    <span class="roadmap-status roadmap-status-planned">{{ item.get_status_display }}</span>
-                                    {% if item.date_label %}
-                                        <span class="roadmap-date">{{ item.date_label }}</span>
-                                    {% endif %}
-                                </div>
-                                <h3>{{ item.title }}</h3>
-                                <p>{{ item.text }}</p>
-                            </article>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-        {% else %}
-            <p>Roadmap пока не заполнен.</p>
-        {% endif %}
-    </div>
-</section>
-
-<section id="services" class="section anchor-section">
-    <div class="container narrow">
-        <h1>{% if services_page %}{{ services_page.title }}{% else %}Услуги{% endif %}</h1>
-        {% if services_page and services_page.intro_text %}
-            <p>{{ services_page.intro_text }}</p>
-        {% endif %}
-
-        <div class="cards-grid">
-            {% for item in service_items %}
-                <article class="card">
-                    <h3>{{ item.title }}</h3>
-                    <p>{{ item.description }}</p>
-                </article>
-            {% empty %}
-                <p>Услуги пока не заполнены.</p>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section id="faq" class="section anchor-section">
-    <div class="container narrow">
-        <h1>{% if faq_page %}{{ faq_page.title }}{% else %}FAQ{% endif %}</h1>
-        {% if faq_page and faq_page.intro_text %}
-            <p>{{ faq_page.intro_text }}</p>
-        {% endif %}
-
-        <div class="faq-list">
-            {% for item in faq_items %}
-                <article class="card">
-                    <h3>{{ item.question }}</h3>
-                    <p>{{ item.answer }}</p>
-                </article>
-            {% empty %}
-                <p>FAQ пока не заполнен.</p>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section class="section section-soft anchor-section">
-    <div class="container two-col">
-        <div>
-            <h2>{{ homepage.example_sites_title }}</h2>
-            <ul class="links-list">
-                {% for item in site_examples %}
-                    <li><a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title }}</a></li>
-                {% empty %}
-                    <li>Список пока пуст.</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div>
-            <h2>{{ homepage.example_bots_title }}</h2>
-            <ul class="links-list">
-                {% for item in bot_examples %}
-                    <li><a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title }}</a></li>
-                {% empty %}
-                    <li>Список пока пуст.</li>
-                {% endfor %}
-            </ul>
         </div>
     </div>
 </section>

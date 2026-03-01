@@ -1,3 +1,5 @@
+import ipaddress
+
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -37,7 +39,7 @@ class FeatureBlock(models.Model):
 	use_telegram_channel_link = models.BooleanField(default=False)
 	telegram_link_label = models.CharField(max_length=255, blank=True)
 	order = models.PositiveIntegerField(default=0)
-
+	
 	class Meta:
 		verbose_name = "Блок преимуществ"
 		verbose_name_plural = "Блоки преимуществ"
@@ -58,6 +60,7 @@ class ExampleLink(models.Model):
 	link_type = models.CharField(max_length=10, choices=TYPE_CHOICES)
 	title = models.CharField(max_length=255)
 	url = models.URLField()
+	image = models.ImageField(upload_to="marketing/example_links/", blank=True, null=True)
 	order = models.PositiveIntegerField(default=0)
 
 	class Meta:
@@ -215,3 +218,50 @@ class FaqItem(models.Model):
 
 	def __str__(self):
 		return self.question
+
+
+class IPGeoCache(models.Model):
+	ip_address = models.GenericIPAddressField(unique=True)
+	country_code = models.CharField(max_length=2, blank=True)
+	country_name = models.CharField(max_length=100, blank=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	class Meta:
+		verbose_name = "IP гео-кеш"
+		verbose_name_plural = "IP гео-кеш"
+		ordering = ["-updated_at", "ip_address"]
+
+	def __str__(self):
+		country = self.country_name or "Unknown"
+		return f"{self.ip_address} -> {country}"
+
+	@staticmethod
+	def is_public_ip(ip_address: str) -> bool:
+		try:
+			ip_obj = ipaddress.ip_address(ip_address)
+		except ValueError:
+			return False
+		return ip_obj.is_global
+
+
+class VisitEvent(models.Model):
+	ip_address = models.GenericIPAddressField()
+	country_code = models.CharField(max_length=2, blank=True)
+	country_name = models.CharField(max_length=100, blank=True)
+	path = models.CharField(max_length=255)
+	user_agent = models.CharField(max_length=500, blank=True)
+	visited_at = models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+		verbose_name = "Посещение"
+		verbose_name_plural = "Посещения"
+		ordering = ["-visited_at"]
+		indexes = [
+			models.Index(fields=["visited_at"]),
+			models.Index(fields=["country_code"]),
+			models.Index(fields=["ip_address", "path", "visited_at"]),
+		]
+
+	def __str__(self):
+		country = self.country_code or "??"
+		return f"{self.path} [{country}] {self.ip_address}"

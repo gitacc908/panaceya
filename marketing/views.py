@@ -21,6 +21,7 @@ def home_view(request):
 	features = FeatureBlock.objects.filter(show_on_home=True)
 	site_examples = ExampleLink.objects.filter(link_type=ExampleLink.SITE)
 	bot_examples = ExampleLink.objects.filter(link_type=ExampleLink.BOT)
+	hero_examples = ExampleLink.objects.filter(image__isnull=False).exclude(image="").order_by("order", "id")
 	contacts_page = ContactsPage.objects.first()
 	contacts = ContactLink.objects.all()
 	deposits_page = DepositsPage.objects.first()
@@ -41,6 +42,7 @@ def home_view(request):
 			"features": features,
 			"site_examples": site_examples,
 			"bot_examples": bot_examples,
+			"hero_examples": hero_examples,
 			"contacts_page": contacts_page,
 			"contacts": contacts,
 			"deposits_page": deposits_page,
