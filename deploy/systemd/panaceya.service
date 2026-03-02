@@ -1,0 +1,18 @@
+[Unit]
+Description=Panaceya Django (Gunicorn)
+After=network.target
+
+[Service]
+User=panaceya
+Group=www-data
+WorkingDirectory=/srv/panaceya/current
+EnvironmentFile=/srv/panaceya/shared/.env
+ExecStart=/srv/panaceya/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8010 panaceya.wsgi:application
+Restart=always
+RestartSec=3
+TimeoutStopSec=30
+KillSignal=SIGQUIT
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
