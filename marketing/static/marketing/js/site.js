@@ -178,3 +178,80 @@ if (prefersReducedMotion || !("IntersectionObserver" in window)) {
 
     revealElements.forEach((item) => observer.observe(item));
 }
+
+const animateFavicon = () => {
+    const favicon = document.getElementById("siteFavicon") || document.querySelector('link[rel="icon"], link[rel="shortcut icon"]');
+    if (!favicon) {
+        return;
+    }
+
+    const sourceHref = favicon.getAttribute("href");
+    if (!sourceHref) {
+        return;
+    }
+
+    const canvas = document.createElement("canvas");
+    const size = 64;
+    canvas.width = size;
+    canvas.height = size;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+        return;
+    }
+
+    const iconImage = new Image();
+    iconImage.decoding = "async";
+
+    let angle = 0;
+    let timer = null;
+
+    const render = () => {
+        ctx.clearRect(0, 0, size, size);
+        ctx.save();
+        ctx.translate(size / 2, size / 2);
+        ctx.rotate(angle);
+        ctx.drawImage(iconImage, -size / 2, -size / 2, size, size);
+        ctx.restore();
+
+        favicon.href = canvas.toDataURL("image/png");
+        angle = (angle + 0.12) % (Math.PI * 2);
+    };
+
+    const stop = () => {
+        if (timer !== null) {
+            clearInterval(timer);
+            timer = null;
+        }
+    };
+
+    const start = () => {
+        if (document.hidden || timer !== null) {
+            return;
+        }
+
+        render();
+        timer = setInterval(render, 90);
+    };
+
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            stop();
+            favicon.href = sourceHref;
+        } else {
+            start();
+        }
+    });
+
+    iconImage.addEventListener(
+        "load",
+        () => {
+            start();
+        },
+        { once: true }
+    );
+
+    iconImage.src = sourceHref;
+};
+
+animateFavicon();

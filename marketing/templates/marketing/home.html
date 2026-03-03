@@ -18,6 +18,11 @@
             <p class="currencies">{{ homepage.available_currencies }}</p>
         </div>
         <div class="hero-media glass-panel{% if hero_examples %} has-slider{% endif %}" data-reveal>
+            <div class="hero-orbit" aria-hidden="true">
+                <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F48A.svg" alt="" class="hero-orbit-item hero-orbit-pill">
+                <!-- <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F4C8.svg" alt="" class="hero-orbit-item hero-orbit-chart"> -->
+                <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F916.svg" alt="" class="hero-orbit-item hero-orbit-bot">
+            </div>
             {% if hero_examples %}
                 <div class="hero-slider example-carousel" data-carousel data-carousel-mode="slideshow" data-carousel-autoplay="2000">
                     <button class="carousel-btn hero-slider-btn" type="button" data-carousel-prev aria-label="Предыдущий слайд">‹</button>
@@ -47,6 +52,42 @@
     </div>
 </section>
 
+<section class="payments-strip" data-reveal aria-label="Популярные способы оплаты">
+    <div class="container">
+        <div class="payments-marquee">
+            <div class="payments-track" aria-hidden="true">
+                <div class="payments-group">
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/visa.svg' %}" alt="Visa" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/mastercard.svg' %}" alt="Mastercard" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/qiwi.svg' %}" alt="QIWI" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/bitcoin.svg' %}" alt="Bitcoin" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/litecoin.svg' %}" alt="Litecoin" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/ethereum.svg' %}" alt="Ethereum" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/tether.svg' %}" alt="Tether" class="payment-icon"></div>
+                </div>
+                <div class="payments-group">
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/visa.svg' %}" alt="" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/mastercard.svg' %}" alt="" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/qiwi.svg' %}" alt="" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/bitcoin.svg' %}" alt="" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/litecoin.svg' %}" alt="" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/ethereum.svg' %}" alt="" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/tether.svg' %}" alt="" class="payment-icon"></div>
+                </div>
+                <div class="payments-group">
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/visa.svg' %}" alt="" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/mastercard.svg' %}" alt="" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/qiwi.svg' %}" alt="" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/bitcoin.svg' %}" alt="" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/litecoin.svg' %}" alt="" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/ethereum.svg' %}" alt="" class="payment-icon"></div>
+                    <div class="payment-chip"><img src="{% static 'marketing/img/payments/tether.svg' %}" alt="" class="payment-icon"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="section section-showcase" data-reveal>
     <div class="container">
         <div class="section-head" data-reveal>
@@ -56,6 +97,9 @@
         </div>
         <div class="two-col showcase-grid">
             <article class="glass-panel showcase-panel" data-reveal>
+                <div class="panel-icon panel-icon-site" aria-hidden="true">
+                    <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F4C8.svg" alt="">
+                </div>
                 <h3>{{ homepage.example_sites_title }}</h3>
                 {% if site_examples %}
                     <div class="example-carousel showcase-carousel" data-carousel>
@@ -89,6 +133,9 @@
             </article>
 
             <article class="glass-panel showcase-panel" data-reveal>
+                <div class="panel-icon panel-icon-bot" aria-hidden="true">
+                    <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F916.svg" alt="">
+                </div>
                 <h3>{{ homepage.example_bots_title }}</h3>
                 {% if bot_examples %}
                     <div class="example-carousel showcase-carousel" data-carousel>
@@ -98,11 +145,7 @@
                                 {% for item in bot_examples %}
                                     <article class="carousel-slide">
                                         <a class="carousel-link" href="{{ item.url }}" target="_blank" rel="noopener">
-                                            {% if item.image %}
-                                                <img src="{{ item.image.url }}" alt="{{ item.title }}" class="carousel-image">
-                                            {% else %}
-                                                <div class="carousel-fallback">{{ item.title }}</div>
-                                            {% endif %}
+                                            <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F916.svg" alt="{{ item.title }}" class="carousel-image bot-vibe-image">
                                             <span class="carousel-caption">{{ item.title }}</span>
                                         </a>
                                     </article>
@@ -133,6 +176,15 @@
         <div class="cards-grid cards-grid-3">
             {% for feature in features %}
                 <article class="card feature-card" data-reveal>
+                    <div class="card-corner-icon" aria-hidden="true">
+                        {% if forloop.counter0|divisibleby:3 %}
+                            <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F9EA.svg" alt="">
+                        {% elif forloop.counter|divisibleby:2 %}
+                            <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/2695.svg" alt="">
+                        {% else %}
+                            <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F4C8.svg" alt="">
+                        {% endif %}
+                    </div>
                     {% if feature.image %}
                         <img src="{{ feature.image.url }}" alt="{{ feature.title }}" class="feature-image">
                     {% endif %}
@@ -162,6 +214,13 @@
         <div class="cards-grid cards-grid-2">
             {% for item in service_items %}
                 <article class="card service-card" data-reveal>
+                    <div class="card-corner-icon" aria-hidden="true">
+                        {% if forloop.counter|divisibleby:2 %}
+                            <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F48A.svg" alt="">
+                        {% else %}
+                            <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F4AC.svg" alt="">
+                        {% endif %}
+                    </div>
                     <h3>{{ item.title }}</h3>
                     <p>{{ item.description }}</p>
                 </article>
@@ -175,6 +234,9 @@
 <section id="deposits" class="section anchor-section" data-reveal>
     <div class="container narrow">
         <div class="deposits-summary glass-panel" data-reveal>
+            <div class="summary-icon" aria-hidden="true">
+                <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F4C8.svg" alt="">
+            </div>
             <h2>{% if deposits_page %}{{ deposits_page.title }}{% else %}Депозиты{% endif %}</h2>
             {% if deposits_page and deposits_page.big_text %}
                 <p class="lead">{{ deposits_page.big_text }}</p>
@@ -209,7 +271,10 @@
             <div class="roadmap-grid">
                 {% if done_items %}
                     <div class="roadmap-column" data-reveal>
-                        <h3 class="roadmap-column-title roadmap-column-title-done">Выполнено</h3>
+                        <h3 class="roadmap-column-title roadmap-column-title-done">
+                            <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/2695.svg" alt="" class="title-icon spin-slow">
+                            Выполнено
+                        </h3>
                         <div class="roadmap-group roadmap-group-done">
                             {% for item in done_items %}
                                 <article class="card roadmap-item roadmap-item-done">
@@ -230,7 +295,10 @@
 
                 {% if planned_items %}
                     <div class="roadmap-column" data-reveal>
-                        <h3 class="roadmap-column-title roadmap-column-title-planned">Запланировано</h3>
+                        <h3 class="roadmap-column-title roadmap-column-title-planned">
+                            <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F9EA.svg" alt="" class="title-icon float-soft">
+                            Запланировано
+                        </h3>
                         <div class="roadmap-group roadmap-group-planned">
                             {% for item in planned_items %}
                                 <article class="card roadmap-item roadmap-item-planned">
@@ -268,6 +336,9 @@
         <div class="faq-list">
             {% for item in faq_items %}
                 <article class="card faq-card" data-reveal>
+                    <div class="card-corner-icon" aria-hidden="true">
+                        <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F4AC.svg" alt="">
+                    </div>
                     <h3>{{ item.question }}</h3>
                     <p>{{ item.answer }}</p>
                 </article>
@@ -291,11 +362,18 @@
                     <a class="btn" href="{{ contacts_page.telegram_channel_url }}" target="_blank" rel="noopener">Telegram канал проекта</a>
                 </div>
             {% endif %}
+            <div class="contacts-floating-assets" aria-hidden="true">
+                <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F4F1.svg" alt="" class="contacts-floating contacts-floating-phone">
+                <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F4E7.svg" alt="" class="contacts-floating contacts-floating-mail">
+            </div>
         </div>
 
         <div class="cards-grid cards-grid-2 contacts-grid">
             {% for contact in contacts %}
                 <article class="card contact-card" data-reveal>
+                    <div class="card-corner-icon" aria-hidden="true">
+                        <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F4E7.svg" alt="">
+                    </div>
                     <span class="badge">{{ contact.get_role_display }}</span>
                     <h3>{{ contact.title }}</h3>
                     {% if contact.description %}

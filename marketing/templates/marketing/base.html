@@ -8,7 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="{% static 'marketing/img/icon-color.png' %}">
+    <link id="siteFavicon" rel="icon" type="image/svg+xml" href="{% static 'marketing/img/icon-spin.svg' %}">
+    <link rel="alternate icon" type="image/png" href="{% static 'marketing/img/icon-color.png' %}">
     <link rel="stylesheet" href="{% static 'marketing/css/site.css' %}">
 </head>
 <body class="site-body">
@@ -16,7 +17,7 @@
 <header class="site-header">
     <div class="container nav-wrap">
         <a class="brand" href="{% url 'marketing:home' %}">
-            <img src="{% static 'marketing/img/icon-color.png' %}" alt="Панацея" class="brand-logo-text">
+            <img src="{% static 'marketing/img/icon-spin.svg' %}" alt="Панацея" class="brand-logo-text brand-logo-spin">
         </a>
         <button class="burger" type="button" id="burgerBtn" aria-label="Меню">☰</button>
         <nav class="nav" id="mainNav">

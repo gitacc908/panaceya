@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 64" role="img" aria-labelledby="title">
+  <title>Litecoin</title>
+  <circle cx="33" cy="32" r="18" fill="#345D9D"/>
+  <text x="33" y="39" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="20" fill="#fff">L</text>
+  <text x="80" y="40" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="16" fill="#345D9D">LTC</text>
+</svg>
