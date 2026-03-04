@@ -153,6 +153,56 @@ const setupCarousel = (carousel) => {
 
 document.querySelectorAll("[data-carousel]").forEach(setupCarousel);
 
+const setupImageModal = () => {
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("imageModalImage");
+    const triggers = document.querySelectorAll("[data-image-modal-trigger]");
+
+    if (!modal || !modalImage || triggers.length === 0) {
+        return;
+    }
+
+    const closeButtons = modal.querySelectorAll("[data-image-modal-close]");
+
+    const close = () => {
+        modal.setAttribute("hidden", "");
+        modal.setAttribute("aria-hidden", "true");
+        modalImage.removeAttribute("src");
+        modalImage.alt = "";
+        document.body.classList.remove("image-modal-open");
+    };
+
+    const open = (trigger) => {
+        const src = trigger.getAttribute("data-image-src");
+        if (!src) {
+            return;
+        }
+
+        const alt = trigger.getAttribute("data-image-alt") || "Image preview";
+        modalImage.src = src;
+        modalImage.alt = alt;
+        modal.removeAttribute("hidden");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("image-modal-open");
+    };
+
+    triggers.forEach((trigger) => {
+        trigger.addEventListener("click", () => open(trigger));
+    });
+
+    closeButtons.forEach((button) => {
+        button.addEventListener("click", close);
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !modal.hasAttribute("hidden")) {
+            close();
+        }
+    });
+};
+
+setupImageModal();
+
 const revealElements = document.querySelectorAll("[data-reveal]");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 

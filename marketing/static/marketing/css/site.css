@@ -223,9 +223,29 @@ h3,
 
 .hero-copy {
     position: relative;
+    z-index: 1;
     overflow: hidden;
     border-radius: 26px;
     padding: clamp(22px, 4vw, 36px);
+}
+
+.hero-copy::before {
+    content: "";
+    position: absolute;
+    right: -2.5vw;
+    bottom: -6px;
+    width: min(44vw, 560px);
+    height: clamp(300px, 64vh, 700px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.19;
+    background-image: var(--hero-human-bg);
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: contain;
+    filter: saturate(0.78) contrast(0.9) brightness(1.06);
+    -webkit-mask-image: linear-gradient(270deg, rgba(0, 0, 0, 0.9) 34%, rgba(0, 0, 0, 0.44) 72%, rgba(0, 0, 0, 0) 100%);
+    mask-image: linear-gradient(270deg, rgba(0, 0, 0, 0.9) 34%, rgba(0, 0, 0, 0.44) 72%, rgba(0, 0, 0, 0) 100%);
 }
 
 .hero-copy::after {
@@ -238,6 +258,12 @@ h3,
     border-radius: 50%;
     background: radial-gradient(circle, rgba(37, 197, 133, 0.26) 0%, rgba(37, 197, 133, 0) 68%);
     pointer-events: none;
+    z-index: 0;
+}
+
+.hero-copy > * {
+    position: relative;
+    z-index: 1;
 }
 
 .eyebrow {
@@ -479,8 +505,9 @@ h3,
 }
 
 .section-head {
-    margin-bottom: 24px;
+    margin: 0 auto 24px;
     max-width: 760px;
+    text-align: center;
 }
 
 .section-kicker {
@@ -490,6 +517,15 @@ h3,
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: #0e7e5b;
+}
+
+.section-title-icon {
+    display: block;
+    width: clamp(38px, 5vw, 56px);
+    height: clamp(38px, 5vw, 56px);
+    margin: 0 auto 10px;
+    filter: drop-shadow(0 8px 14px rgba(9, 92, 66, 0.2));
+    animation: float-soft 5.8s ease-in-out infinite;
 }
 
 .section-head h2 {
@@ -634,6 +670,119 @@ a {
     object-fit: cover;
 }
 
+.feature-image-trigger {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 14px;
+    background: transparent;
+    cursor: zoom-in;
+    overflow: hidden;
+}
+
+.feature-image-trigger::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    border: 1px solid rgba(34, 175, 126, 0.28);
+    background: linear-gradient(160deg, rgba(11, 132, 96, 0.02), rgba(11, 132, 96, 0.15));
+    pointer-events: none;
+    transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.feature-image-trigger:hover::after {
+    border-color: rgba(18, 163, 117, 0.55);
+    background: linear-gradient(160deg, rgba(11, 132, 96, 0.04), rgba(11, 132, 96, 0.2));
+}
+
+.feature-image-trigger:focus-visible {
+    outline: 2px solid rgba(8, 140, 102, 0.8);
+    outline-offset: 2px;
+}
+
+.feature-image-hint {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 1;
+    border-radius: 999px;
+    padding: 5px 9px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #0e5f48;
+    background: rgba(255, 255, 255, 0.86);
+    border: 1px solid rgba(255, 255, 255, 0.92);
+    box-shadow: 0 6px 12px rgba(7, 56, 40, 0.16);
+    pointer-events: none;
+}
+
+.image-modal[hidden] {
+    display: none;
+}
+
+.image-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1300;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.image-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(6, 34, 26, 0.76);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.image-modal-dialog {
+    position: relative;
+    z-index: 1;
+    width: min(960px, 100%);
+    max-height: 90vh;
+    border-radius: 16px;
+    padding: 10px;
+    background: rgba(228, 251, 239, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    box-shadow: 0 24px 48px rgba(4, 36, 28, 0.38);
+}
+
+.image-modal-image {
+    display: block;
+    width: 100%;
+    max-height: calc(90vh - 20px);
+    object-fit: contain;
+    border-radius: 12px;
+    background: rgba(11, 71, 52, 0.16);
+}
+
+.image-modal-close {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    z-index: 2;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 999px;
+    font-size: 1.45rem;
+    line-height: 1;
+    color: #0f664d;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 8px 20px rgba(5, 45, 33, 0.28);
+    cursor: pointer;
+}
+
+body.image-modal-open {
+    overflow: hidden;
+}
+
 .empty-note {
     margin: 0;
     color: #3c695c;
@@ -644,6 +793,7 @@ a {
     border-radius: 22px;
     padding: clamp(18px, 3vw, 26px);
     margin-bottom: 18px;
+    text-align: center;
 }
 
 .summary-icon {
@@ -707,6 +857,11 @@ a {
     display: grid;
     gap: 14px;
     padding-left: 38px;
+    --roadmap-spark-size: 64px;
+    --roadmap-spark-width: 14px;
+    --roadmap-track-offset: 4px;
+    --roadmap-spark-core: rgba(176, 255, 225, 0.95);
+    --roadmap-spark-glow: rgba(18, 171, 122, 0.84);
 }
 
 .roadmap-group::before {
@@ -719,12 +874,46 @@ a {
     border-radius: 999px;
 }
 
+.roadmap-group::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: var(--roadmap-track-offset);
+    width: var(--roadmap-spark-width);
+    height: var(--roadmap-spark-size);
+    border-radius: 999px;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 50% 11px, rgba(255, 255, 255, 0.98) 0 3px, var(--roadmap-spark-core) 4px, rgba(255, 255, 255, 0.45) 7px, rgba(255, 255, 255, 0) 10px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, var(--roadmap-spark-glow) 26%, rgba(38, 199, 144, 0.35) 56%, rgba(38, 199, 144, 0) 100%);
+    box-shadow:
+        0 0 14px rgba(67, 222, 167, 0.58),
+        0 0 30px rgba(56, 216, 159, 0.28);
+    transform-origin: 50% 10px;
+    will-change: top, transform, opacity, filter;
+    animation:
+        roadmap-spark-fall 3.15s cubic-bezier(0.34, 0.06, 0.28, 0.98) infinite,
+        roadmap-spark-flicker 0.36s ease-in-out infinite;
+}
+
 .roadmap-group-done::before {
     background: var(--green-main);
 }
 
 .roadmap-group-planned::before {
     background: var(--orange-main);
+}
+
+.roadmap-group-planned {
+    --roadmap-spark-core: rgba(255, 225, 171, 0.96);
+    --roadmap-spark-glow: rgba(230, 142, 36, 0.86);
+}
+
+.roadmap-group-planned::after {
+    box-shadow:
+        0 0 14px rgba(255, 188, 110, 0.6),
+        0 0 30px rgba(255, 176, 85, 0.28);
+    animation-delay: -1.6s, -0.08s;
 }
 
 .roadmap-item {
@@ -799,6 +988,7 @@ a {
     overflow: hidden;
     border-radius: 22px;
     padding: clamp(18px, 3vw, 28px);
+    text-align: center;
 }
 
 .contacts-description {
@@ -807,6 +997,8 @@ a {
 
 .contacts-actions {
     margin-top: 14px;
+    display: flex;
+    justify-content: center;
 }
 
 .contact-card {
@@ -925,6 +1117,12 @@ a {
 
 .carousel-image {
     object-fit: cover;
+}
+
+.showcase-carousel .carousel-image {
+    object-fit: cover;
+    padding: 0;
+    background: transparent;
 }
 
 .bot-vibe-image {
@@ -1126,6 +1324,44 @@ a {
     }
 }
 
+@keyframes roadmap-spark-fall {
+    0% {
+        top: var(--roadmap-track-offset);
+        opacity: 0;
+        transform: translateX(0) scaleY(0.72) scaleX(0.88);
+    }
+    6% {
+        opacity: 1;
+    }
+    22% {
+        transform: translateX(0.9px) scaleY(1) scaleX(1);
+    }
+    46% {
+        transform: translateX(-0.8px) scaleY(1) scaleX(0.98);
+    }
+    78% {
+        opacity: 0.95;
+    }
+    100% {
+        top: calc(100% - var(--roadmap-spark-size) - var(--roadmap-track-offset));
+        opacity: 0;
+        transform: translateX(0.5px) scaleY(0.86) scaleX(0.9);
+    }
+}
+
+@keyframes roadmap-spark-flicker {
+    0%,
+    100% {
+        filter: brightness(1) saturate(1);
+    }
+    45% {
+        filter: brightness(1.28) saturate(1.15);
+    }
+    68% {
+        filter: brightness(0.9) saturate(0.95);
+    }
+}
+
 @keyframes btn-sparkle-sweep {
     0%,
     52% {
@@ -1182,8 +1418,7 @@ a {
     }
 
     .hero-grid {
-        grid-template-columns: 1.08fr 0.92fr;
-        gap: 24px;
+        grid-template-columns: 1fr;
     }
 
     .cards-grid-2 {
@@ -1218,6 +1453,15 @@ a {
 
     .hero {
         padding-top: 56px;
+    }
+
+    .hero-copy::before {
+        right: -22vw;
+        bottom: -2px;
+        width: min(90vw, 430px);
+        height: clamp(250px, 52vh, 430px);
+        opacity: 0.14;
+        filter: saturate(0.74) contrast(0.9) brightness(1.1);
     }
 
     .hero-copy,
@@ -1304,6 +1548,12 @@ a {
         padding-right: 34px;
     }
 
+    .section-title-icon {
+        width: clamp(34px, 8.5vw, 46px);
+        height: clamp(34px, 8.5vw, 46px);
+        margin-bottom: 8px;
+    }
+
     .summary-icon {
         width: 34px;
         height: 34px;
@@ -1311,8 +1561,41 @@ a {
         right: 10px;
     }
 
+    .roadmap-group::after {
+        --roadmap-spark-size: 48px;
+        --roadmap-spark-width: 11px;
+        left: 7px;
+    }
+
     .bot-vibe-image {
         padding: clamp(20px, 6vw, 30px);
+    }
+
+    .feature-image-hint {
+        font-size: 0.68rem;
+        padding: 4px 8px;
+    }
+
+    .image-modal {
+        padding: 12px;
+    }
+
+    .image-modal-dialog {
+        border-radius: 12px;
+        padding: 8px;
+    }
+
+    .image-modal-image {
+        max-height: calc(92vh - 16px);
+        border-radius: 10px;
+    }
+
+    .image-modal-close {
+        top: -8px;
+        right: -8px;
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
     }
 
     .carousel-btn {

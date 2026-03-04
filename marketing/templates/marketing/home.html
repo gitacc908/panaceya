@@ -4,8 +4,12 @@
 {% block title %}Главная — Панацея{% endblock %}
 
 {% block content %}
-<section id="home" class="hero anchor-section" data-reveal>
-    <div class="container hero-grid">
+<section
+    id="home"
+    class="hero anchor-section"
+    data-reveal
+>
+    <div class="container hero-grid" style="--hero-human-bg: url('{% static 'marketing/img/green human.png' %}');">
         <div class="hero-copy glass-panel" data-reveal>
             <p class="eyebrow">Платформа роста</p>
             <h1>{{ homepage.hero_title }}</h1>
@@ -16,38 +20,6 @@
                 <a class="btn btn-light" href="#services">Смотреть услуги</a>
             </div>
             <p class="currencies">{{ homepage.available_currencies }}</p>
-        </div>
-        <div class="hero-media glass-panel{% if hero_examples %} has-slider{% endif %}" data-reveal>
-            <div class="hero-orbit" aria-hidden="true">
-                <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F48A.svg" alt="" class="hero-orbit-item hero-orbit-pill">
-                <!-- <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F4C8.svg" alt="" class="hero-orbit-item hero-orbit-chart"> -->
-                <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F916.svg" alt="" class="hero-orbit-item hero-orbit-bot">
-            </div>
-            {% if hero_examples %}
-                <div class="hero-slider example-carousel" data-carousel data-carousel-mode="slideshow" data-carousel-autoplay="2000">
-                    <button class="carousel-btn hero-slider-btn" type="button" data-carousel-prev aria-label="Предыдущий слайд">‹</button>
-                    <div class="carousel-viewport hero-slider-viewport" data-carousel-viewport>
-                        <div class="carousel-track" data-carousel-track>
-                            {% for item in hero_examples %}
-                                <article class="carousel-slide">
-                                    <a class="carousel-link" href="{{ item.url }}" target="_blank" rel="noopener">
-                                        <img src="{{ item.image.url }}" alt="{{ item.title }}" class="hero-logo hero-slide-image">
-                                        <span class="hero-slide-caption">{{ item.title }}</span>
-                                    </a>
-                                </article>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <button class="carousel-btn hero-slider-btn" type="button" data-carousel-next aria-label="Следующий слайд">›</button>
-                    <div class="carousel-dots hero-slider-dots" data-carousel-dots>
-                        {% for item in hero_examples %}
-                            <button type="button" class="carousel-dot{% if forloop.first %} is-active{% endif %}" data-carousel-dot="{{ forloop.counter0 }}" aria-label="Слайд {{ forloop.counter }}"></button>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% else %}
-                <img src="{% static 'marketing/img/logo-text-color.png' %}" alt="Панацея" class="hero-logo">
-            {% endif %}
         </div>
     </div>
 </section>
@@ -92,6 +64,7 @@
     <div class="container">
         <div class="section-head" data-reveal>
             <p class="section-kicker">Витрина решений</p>
+            <img src="{% static 'marketing/img/section-icons/showcase.svg' %}" alt="" class="section-title-icon" aria-hidden="true">
             <h2>Примеры, которые уже работают</h2>
             <p>Покажите клиентам, как выглядит ваш продукт в деле: сайты и боты в одном визуальном блоке.</p>
         </div>
@@ -171,6 +144,7 @@
     <div class="container">
         <div class="section-head" data-reveal>
             <p class="section-kicker">Преимущества</p>
+            <img src="{% static 'marketing/img/section-icons/features.svg' %}" alt="" class="section-title-icon" aria-hidden="true">
             <h2>{{ homepage.features_title }}</h2>
         </div>
         <div class="cards-grid cards-grid-3">
@@ -186,7 +160,17 @@
                         {% endif %}
                     </div>
                     {% if feature.image %}
-                        <img src="{{ feature.image.url }}" alt="{{ feature.title }}" class="feature-image">
+                        <button
+                            type="button"
+                            class="feature-image-trigger"
+                            data-image-modal-trigger
+                            data-image-src="{{ feature.image.url }}"
+                            data-image-alt="{{ feature.title }}"
+                            aria-label="Открыть изображение: {{ feature.title }}"
+                        >
+                            <img src="{{ feature.image.url }}" alt="{{ feature.title }}" class="feature-image">
+                            <span class="feature-image-hint">Нажмите, чтобы увеличить</span>
+                        </button>
                     {% endif %}
                     <h3>{{ feature.title }}</h3>
                     <p>{{ feature.text }}</p>
@@ -205,6 +189,7 @@
     <div class="container narrow">
         <div class="section-head" data-reveal>
             <p class="section-kicker">Что вы получаете</p>
+            <img src="{% static 'marketing/img/section-icons/services.svg' %}" alt="" class="section-title-icon" aria-hidden="true">
             <h2>{% if services_page %}{{ services_page.title }}{% else %}Услуги{% endif %}</h2>
             {% if services_page and services_page.intro_text %}
                 <p>{{ services_page.intro_text }}</p>
@@ -233,11 +218,14 @@
 
 <section id="deposits" class="section anchor-section" data-reveal>
     <div class="container narrow">
+        <div class="section-head" data-reveal>
+            <img src="{% static 'marketing/img/section-icons/deposits.svg' %}" alt="" class="section-title-icon" aria-hidden="true">
+            <h2>{% if deposits_page %}{{ deposits_page.title }}{% else %}Депозиты{% endif %}</h2>
+        </div>
         <div class="deposits-summary glass-panel" data-reveal>
             <div class="summary-icon" aria-hidden="true">
                 <img src="https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/1F4C8.svg" alt="">
             </div>
-            <h2>{% if deposits_page %}{{ deposits_page.title }}{% else %}Депозиты{% endif %}</h2>
             {% if deposits_page and deposits_page.big_text %}
                 <p class="lead">{{ deposits_page.big_text }}</p>
             {% endif %}
@@ -264,6 +252,7 @@
     <div class="container narrow">
         <div class="section-head" data-reveal>
             <p class="section-kicker">План развития</p>
+            <img src="{% static 'marketing/img/section-icons/roadmap.svg' %}" alt="" class="section-title-icon" aria-hidden="true">
             <h2>Roadmap</h2>
         </div>
 
@@ -327,6 +316,7 @@
     <div class="container narrow">
         <div class="section-head" data-reveal>
             <p class="section-kicker">Частые вопросы</p>
+            <img src="{% static 'marketing/img/section-icons/faq.svg' %}" alt="" class="section-title-icon" aria-hidden="true">
             <h2>{% if faq_page %}{{ faq_page.title }}{% else %}FAQ{% endif %}</h2>
             {% if faq_page and faq_page.intro_text %}
                 <p>{{ faq_page.intro_text }}</p>
@@ -351,9 +341,12 @@
 
 <section id="contacts" class="section anchor-section section-cta" data-reveal>
     <div class="container narrow contacts-section">
-        <div class="contacts-head glass-panel" data-reveal>
+        <div class="section-head" data-reveal>
             <p class="section-kicker">Контакты</p>
+            <img src="{% static 'marketing/img/section-icons/contacts.svg' %}" alt="" class="section-title-icon" aria-hidden="true">
             <h2>{% if contacts_page %}{{ contacts_page.title }}{% else %}Контакты{% endif %}</h2>
+        </div>
+        <div class="contacts-head glass-panel" data-reveal>
             {% if contacts_page and contacts_page.description %}
                 <p class="contacts-description">{{ contacts_page.description }}</p>
             {% endif %}
@@ -387,4 +380,12 @@
         </div>
     </div>
 </section>
+
+<div id="imageModal" class="image-modal" aria-hidden="true" hidden>
+    <div class="image-modal-backdrop" data-image-modal-close></div>
+    <div class="image-modal-dialog" role="dialog" aria-modal="true" aria-label="Просмотр изображения">
+        <button type="button" class="image-modal-close" aria-label="Закрыть" data-image-modal-close>×</button>
+        <img id="imageModalImage" class="image-modal-image" src="" alt="">
+    </div>
+</div>
 {% endblock %}
