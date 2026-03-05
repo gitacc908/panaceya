@@ -857,11 +857,6 @@ body.image-modal-open {
     display: grid;
     gap: 14px;
     padding-left: 38px;
-    --roadmap-spark-size: 64px;
-    --roadmap-spark-width: 14px;
-    --roadmap-track-offset: 4px;
-    --roadmap-spark-core: rgba(176, 255, 225, 0.95);
-    --roadmap-spark-glow: rgba(18, 171, 122, 0.84);
 }
 
 .roadmap-group::before {
@@ -872,31 +867,6 @@ body.image-modal-open {
     bottom: 4px;
     width: 3px;
     border-radius: 999px;
-}
-
-.roadmap-group::after {
-    content: "";
-    position: absolute;
-    left: 6px;
-    top: var(--roadmap-track-offset);
-    width: var(--roadmap-spark-width);
-    height: var(--roadmap-spark-size);
-    border-radius: 999px;
-    pointer-events: none;
-    background:
-        radial-gradient(circle at 50% 11px, rgba(255, 255, 255, 0.98) 0 3px, var(--roadmap-spark-core) 4px, rgba(255, 255, 255, 0.45) 7px, rgba(255, 255, 255, 0) 10px),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, var(--roadmap-spark-glow) 26%, rgba(38, 199, 144, 0.35) 56%, rgba(38, 199, 144, 0) 100%);
-    box-shadow:
-        0 0 14px rgba(67, 222, 167, 0.58),
-        0 0 30px rgba(56, 216, 159, 0.28);
-    transform-origin: 50% 10px;
-    will-change: top, transform, opacity, filter;
-    animation:
-        roadmap-spark-fall 3.15s cubic-bezier(0.34, 0.06, 0.28, 0.98) infinite,
-        roadmap-spark-flicker 0.36s ease-in-out infinite;
-}
-
-.roadmap-group-done::before {
     background: var(--green-main);
 }
 
@@ -904,16 +874,8 @@ body.image-modal-open {
     background: var(--orange-main);
 }
 
-.roadmap-group-planned {
-    --roadmap-spark-core: rgba(255, 225, 171, 0.96);
-    --roadmap-spark-glow: rgba(230, 142, 36, 0.86);
-}
-
-.roadmap-group-planned::after {
-    box-shadow:
-        0 0 14px rgba(255, 188, 110, 0.6),
-        0 0 30px rgba(255, 176, 85, 0.28);
-    animation-delay: -1.6s, -0.08s;
+.roadmap-group-done::before {
+    background: var(--green-main);
 }
 
 .roadmap-item {
@@ -1117,6 +1079,20 @@ body.image-modal-open {
 
 .carousel-image {
     object-fit: cover;
+}
+
+.carousel-image[data-image-modal-trigger] {
+    cursor: zoom-in;
+}
+
+.carousel-link-expandable,
+.carousel-link-expandable .carousel-image,
+.carousel-link-expandable .carousel-caption {
+    cursor: zoom-in;
+}
+
+.carousel-link-expandable .carousel-caption {
+    pointer-events: none;
 }
 
 .showcase-carousel .carousel-image {
@@ -1324,44 +1300,6 @@ body.image-modal-open {
     }
 }
 
-@keyframes roadmap-spark-fall {
-    0% {
-        top: var(--roadmap-track-offset);
-        opacity: 0;
-        transform: translateX(0) scaleY(0.72) scaleX(0.88);
-    }
-    6% {
-        opacity: 1;
-    }
-    22% {
-        transform: translateX(0.9px) scaleY(1) scaleX(1);
-    }
-    46% {
-        transform: translateX(-0.8px) scaleY(1) scaleX(0.98);
-    }
-    78% {
-        opacity: 0.95;
-    }
-    100% {
-        top: calc(100% - var(--roadmap-spark-size) - var(--roadmap-track-offset));
-        opacity: 0;
-        transform: translateX(0.5px) scaleY(0.86) scaleX(0.9);
-    }
-}
-
-@keyframes roadmap-spark-flicker {
-    0%,
-    100% {
-        filter: brightness(1) saturate(1);
-    }
-    45% {
-        filter: brightness(1.28) saturate(1.15);
-    }
-    68% {
-        filter: brightness(0.9) saturate(0.95);
-    }
-}
-
 @keyframes btn-sparkle-sweep {
     0%,
     52% {
@@ -1559,12 +1497,6 @@ body.image-modal-open {
         height: 34px;
         top: 10px;
         right: 10px;
-    }
-
-    .roadmap-group::after {
-        --roadmap-spark-size: 48px;
-        --roadmap-spark-width: 11px;
-        left: 7px;
     }
 
     .bot-vibe-image {

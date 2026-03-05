@@ -173,7 +173,7 @@ const setupImageModal = () => {
     };
 
     const open = (trigger) => {
-        const src = trigger.getAttribute("data-image-src");
+        const src = trigger.getAttribute("data-image-src") || trigger.getAttribute("src");
         if (!src) {
             return;
         }
@@ -187,7 +187,11 @@ const setupImageModal = () => {
     };
 
     triggers.forEach((trigger) => {
-        trigger.addEventListener("click", () => open(trigger));
+        trigger.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            open(trigger);
+        });
     });
 
     closeButtons.forEach((button) => {

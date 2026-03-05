@@ -81,14 +81,21 @@
                             <div class="carousel-track" data-carousel-track>
                                 {% for item in site_examples %}
                                     <article class="carousel-slide">
-                                        <a class="carousel-link" href="{{ item.url }}" target="_blank" rel="noopener">
+                                        <div class="carousel-link{% if item.image %} carousel-link-expandable{% endif %}">
                                             {% if item.image %}
-                                                <img src="{{ item.image.url }}" alt="{{ item.title }}" class="carousel-image">
+                                                <img
+                                                    src="{{ item.image.url }}"
+                                                    alt="{{ item.title }}"
+                                                    class="carousel-image"
+                                                    data-image-modal-trigger
+                                                    data-image-src="{{ item.image.url }}"
+                                                    data-image-alt="{{ item.title }}"
+                                                >
                                             {% else %}
                                                 <div class="carousel-fallback">{{ item.title }}</div>
                                             {% endif %}
                                             <span class="carousel-caption">{{ item.title }}</span>
-                                        </a>
+                                        </div>
                                     </article>
                                 {% endfor %}
                             </div>
